@@ -6,6 +6,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import collections.abc
+import importlib
 import logging
 import os
 import re
@@ -154,6 +155,7 @@ def load_tool_info(tool_name: str, config):
     try:
         if config.container:
             # lazy import because it can fail if container mode is not supported
+            importlib.import_module(tool_module)
             from benchexec import containerized_tool
 
             tool = containerized_tool.ContainerizedTool(tool_module, config)
